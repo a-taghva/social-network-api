@@ -3,7 +3,6 @@ const { User } = require('../models');
 const userController = {
   // get all users
   getAllUsers(req, res) {
-    console.log(req);
     User.find({})
       .then(dbUserData => res.json(dbUserData))
       .catch(err => {
@@ -15,12 +14,40 @@ const userController = {
 
   // get a single user by id
   getUserById({ params }, res) {
-    User.findOne({ _id: params.user_id })
+    User.findOne({ _id: params.userId })
       .then(dbUserData => {
         if (!dbUserData) {
           return res.status(404).json({ message: 'No user found with this id' });
         }
 
+        res.json(dbUserData);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  },
+
+
+  // add a user
+  addUser({ body }, res) {
+  User.create(body)
+    .then(dbUserData => res.json(dbUserData))
+    .catch(err => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+  },
+
+
+  // update a user
+  updateUser({ params, body}, res) {
+    User.findOneAndUpdate({ _id: params.userId }, body, { new: true, runValidator: true })
+      .then(dbUserData => {
+        if (!dbUserData) {
+          res.status(404).json({ message: 'No user found with this id!' });
+        }
+        
         res.json(dbUserData);
       })
       .catch(err => {
