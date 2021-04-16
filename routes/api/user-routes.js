@@ -6,6 +6,9 @@ const {
 
 router
   .route('/')
-  .get(getAllUsers);
+  .get(getAllUsers)
 
+router
+  .route('/:userId')
+  .get(getUserById);
 module.exports = router;

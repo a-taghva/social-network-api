@@ -15,7 +15,7 @@ const userController = {
 
   // get a single user by id
   getUserById({ params }, res) {
-    User.finOne({ _id: params.user_id })
+    User.findOne({ _id: params.user_id })
       .then(dbUserData => {
         if (!dbUserData) {
           return res.status(404).json({ message: 'No user found with this id' });
