@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 const userController = {
   // get all users
@@ -65,11 +65,12 @@ const userController = {
           return res.status(404).json(err);
         }
 
+        removeAssociatedThoughts(dbUserData.username);
         res.json(dbUserData);
       })
       .catch(err => {
         console.log(err);
-        res.staus(400).json(err);
+        res.status(400).json(err);
       })
   },
 
@@ -115,5 +116,11 @@ const userController = {
       });
   }
 };
+
+function removeAssociatedThoughts(name) {
+  Thought.deleteMany({ username: name })
+    .then(console.log)
+    .catch(console.log);
+}
 
 module.exports = userController;
