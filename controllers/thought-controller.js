@@ -85,7 +85,7 @@ const thoughtController = {
     )
       .then(dbThoughtData => {
         if (!dbThoughtData) {
-          return res.status(404).json(err);
+          return res.status(404).json({ message: "No thought found with this id!" });
         }
 
         res.json(dbThoughtData);

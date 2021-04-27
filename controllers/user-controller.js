@@ -59,21 +59,15 @@ const userController = {
 
   // delete a user by it's id
   deleteUser({ params }, res) {
-
-        User.findOneAndDelete(
+    Thought.deleteMany({ userId: params.userId})
+      .then(() => {
+        return User.findOneAndDelete(
           { _id: params.userId }
         )
-
-    // Though.deleteMany({ userId: params.userId})
-    //   .then(() => {
-    //     return User.findOneAndDelete(
-    //       { _id: params.userId },
-    //       { new: true }
-    //     )
-    //   })
+      })
       .then(dbUserData => {
         if (!dbUserData) {
-          return res.status(404).json({ message: 'No User found with this id!' });
+          return res.status(404).json({ message: "No user found with this id!"});
         }
 
         res.json(dbUserData);
