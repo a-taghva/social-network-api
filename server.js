@@ -1,8 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-require('dotenv').config();
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -12,7 +10,7 @@ app.use(express.static('public'));
 
 app.use(require('./routes'));
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ocial-network', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social_network_db', {
   useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true
